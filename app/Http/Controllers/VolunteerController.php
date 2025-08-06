@@ -28,4 +28,19 @@ class VolunteerController extends Controller
 
         return back()->with('success', 'Request accepted successfully!');
     }
+
+    // Decline a pending request
+    public function declineRequest($id)
+    {
+        $request = HelpRequest::findOrFail($id);
+
+        if ($request->status !== 'pending') {
+            return back()->with('error', 'Request is already processed.');
+        }
+
+        $request->status = 'declined';
+        $request->save();
+
+        return back()->with('success', 'Request declined successfully!');
+    }
 }
