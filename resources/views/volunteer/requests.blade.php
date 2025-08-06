@@ -56,8 +56,7 @@
     <div class="dashboard-card">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div class="dashboard-title d-flex align-items-center">
-                <img src="https://img.icons8.com/color/48/000000/volunteer.png" alt="Volunteer" style="width: 40px; margin-right: 12px;">
-                Volunteer Dashboard
+                <span style="font-size:2.2rem; font-weight:800; letter-spacing:1px; color:#1b4332;">Volunteer Dashboard</span>
             </div>
             <a href="{{ route('logout') }}" class="btn btn-danger logout-btn">Logout</a>
         </div>
@@ -77,14 +76,14 @@
         @endif
 
         @if($requests->isEmpty())
-            <div class="alert alert-info text-center mt-4 mb-0">
-                <img src="https://img.icons8.com/color/48/000000/inbox.png" style="width:32px;vertical-align:middle;margin-right:8px;">
-                No pending help requests available at the moment.
+            <div class="alert alert-info text-center mt-4 mb-0" style="border-radius:1rem; box-shadow:0 2px 12px #b7e4c7;">
+                <span style="font-size:1.15rem; color:#1b4332; font-weight:600;">No pending help requests available at the moment.</span>
             </div>
         @else
-            <table class="table table-bordered align-middle mt-3">
+            <div class="table-responsive">
+            <table class="table table-hover table-bordered align-middle mt-3" style="border-radius:1rem; overflow:hidden;">
                 <thead class="table-light">
-                    <tr>
+                    <tr style="font-size:1.08rem;">
                         <th>Category</th>
                         <th>Description</th>
                         <th>Status</th>
@@ -95,22 +94,30 @@
                     @foreach ($requests as $request)
                     <tr>
                         <td>
-                            <span class="fw-semibold">{{ $request->category }}</span>
+                            <span class="fw-semibold" style="color:#2d6a4f;">{{ $request->category }}</span>
                         </td>
                         <td>{{ $request->description ?? 'N/A' }}</td>
                         <td>
                             @if($request->status === 'pending')
-                                <span class="badge bg-warning text-dark">Pending</span>
+                                <span class="badge bg-warning text-dark" style="font-size:1rem; padding:0.5em 1.1em; border-radius:0.7em;">Pending</span>
                             @else
-                                <span class="accepted-badge">Accepted</span>
+                                <span class="accepted-badge" style="font-size:1rem;">Accepted</span>
                             @endif
                         </td>
                         <td>
                             @if($request->status === 'pending')
-                                <form method="POST" action="{{ route('volunteer.requests.accept', $request->id) }}">
-                                    @csrf
-                                    <button type="submit" class="btn btn-success btn-sm">Accept</button>
-                                </form>
+                                <div class="d-flex gap-2">
+                                    <form method="POST" action="{{ route('volunteer.requests.accept', $request->id) }}">
+                                        @csrf
+                                        <button type="submit" class="btn btn-success btn-sm" style="border-radius:0.7em;">Accept</button>
+                                    </form>
+                                    <form method="POST" action="{{ route('volunteer.requests.decline', $request->id) }}">
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger btn-sm" style="border-radius:0.7em;">Decline</button>
+                                    </form>
+                                </div>
+                            @elseif($request->status === 'declined')
+                                <span class="badge bg-danger" style="font-size:1rem; padding:0.5em 1.1em; border-radius:0.7em;">Declined</span>
                             @else
                                 <span class="text-muted">Accepted</span>
                             @endif
@@ -119,6 +126,7 @@
                     @endforeach
                 </tbody>
             </table>
+            </div>
         @endif
     </div>
 </div>
