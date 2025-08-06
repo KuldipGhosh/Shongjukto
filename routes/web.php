@@ -22,7 +22,10 @@ Route::middleware('authcheck')->group(function () {
     Route::get('/my-requests', [HelpRequestController::class, 'myRequests'])->name('my.requests');
 
     Route::get('/volunteer/requests', [VolunteerController::class, 'showRequests'])->name('volunteer.requests');
+
+
     Route::post('/volunteer/requests/{id}/accept', [VolunteerController::class, 'acceptRequest'])->name('volunteer.requests.accept');
+    Route::post('/volunteer/requests/{id}/decline', [VolunteerController::class, 'declineRequest'])->name('volunteer.requests.decline');
 
     Route::get('/logout', function () {
         session()->flush();
