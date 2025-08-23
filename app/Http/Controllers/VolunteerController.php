@@ -31,7 +31,11 @@ class VolunteerController extends Controller
         return back()->with('success', 'Request accepted successfully!');
     }
 
+<<<<<<< HEAD
     // Decline a pending help request
+=======
+    // Decline a pending request
+>>>>>>> 70539b460857addd04a3ca460ca006269e73b8a6
     public function declineRequest($id)
     {
         $request = HelpRequest::findOrFail($id);
@@ -45,6 +49,7 @@ class VolunteerController extends Controller
 
         return back()->with('success', 'Request declined successfully!');
     }
+<<<<<<< HEAD
 
     // -------------------
     // Donations Section
@@ -78,4 +83,6 @@ class VolunteerController extends Controller
 
         return back()->with('success', 'Donation accepted successfully!');
     }
+=======
+>>>>>>> 70539b460857addd04a3ca460ca006269e73b8a6
 }

@@ -29,6 +29,13 @@ Route::middleware('authcheck')->group(function () {
     Route::get('/my-requests', [HelpRequestController::class, 'myRequests'])->name('my.requests');
 
     Route::get('/volunteer/requests', [VolunteerController::class, 'showRequests'])->name('volunteer.requests');
+<<<<<<< HEAD
+=======
+
+
+    Route::post('/volunteer/requests/{id}/accept', [VolunteerController::class, 'acceptRequest'])->name('volunteer.requests.accept');
+    Route::post('/volunteer/requests/{id}/decline', [VolunteerController::class, 'declineRequest'])->name('volunteer.requests.decline');
+>>>>>>> 70539b460857addd04a3ca460ca006269e73b8a6
 
     // Donation routes
     Route::get('/donations/create', [DonationController::class, 'create'])->name('donations.create');
