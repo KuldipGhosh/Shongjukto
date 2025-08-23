@@ -6,16 +6,17 @@
 </head>
 <body>
 <div class="container mt-5">
-    <div class="d-flex justify-content-between mb-3">
-        <h2>My Help Requests</h2>
-        <a href="{{ route('logout') }}" class="btn btn-danger">Logout</a>
+    <div class="topbar">
+        <a href="{{ route('home') }}" class="btn btn-outline-primary btn-sm" style="border-radius:10px;">Home</a>
+        <a href="{{ route('profile.show') }}" class="btn btn-outline-secondary btn-sm" style="border-radius:10px;">Profile</a>
+        <a href="{{ route('logout') }}" class="btn btn-danger btn-sm" style="border-radius:10px;">Logout</a>
     </div>
 
     @if($requests->isEmpty())
         <p>You have not submitted any help requests yet.</p>
     @else
-        <table class="table table-bordered">
-            <thead class="table-light">
+        <table class="table table-hover table-bordered" style="border-radius:12px;overflow:hidden;">
+            <thead class="table-light" style="background:#e9f5ee;color:#2d6a4f;">
                 <tr>
                     <th>Category</th>
                     <th>Description</th>

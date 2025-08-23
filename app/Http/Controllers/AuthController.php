@@ -17,7 +17,7 @@ class AuthController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
-            'role' => 'required|in:beneficiary,volunteer',
+            'role' => 'required|in:beneficiary,volunteer,donor',
         ]);
 
         // Create user
@@ -30,7 +30,7 @@ class AuthController extends Controller
 
         // Optional: store user in session
         session(['user_id' => $user->id,
-        'role' => $user->role,]);
+        'user_role' => $user->role,]);
 
         return redirect('/')->with('success', 'Registered successfully');
 
@@ -61,17 +61,9 @@ public function login(Request $request)
     }
 
     // Store user ID and role in session
-    session(['user_id' => $user->id, 'role' => $user->role]);
+    session(['user_id' => $user->id, 'user_role' => $user->role]);
 
-
-    // Redirect based on role
-    if ($user->role === 'beneficiary') {
-        return redirect('/request-help');
-    } elseif ($user->role === 'volunteer') {
-        return redirect('/volunteer/requests');
-    }
-
-    // fallback
-    return redirect('/dashboard')->with('success', 'Logged in successfully');
+    // Redirect all users to homepage after login
+    return redirect('/')->with('success', 'Logged in successfully');
 }
 }

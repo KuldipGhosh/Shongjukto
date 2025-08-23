@@ -9,5 +9,5 @@ class HelpRequest extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'category', 'description','status'];
+    protected $fillable = ['user_id', 'category', 'description','status','latitude','longitude','address'];
 }

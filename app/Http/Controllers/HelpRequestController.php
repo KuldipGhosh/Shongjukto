@@ -27,13 +27,19 @@ class HelpRequestController extends Controller
         $request->validate([
             'category' => 'required',
             'description' => 'nullable|max:1000',
+            'latitude' => 'nullable|numeric|between:-90,90',
+            'longitude' => 'nullable|numeric|between:-180,180',
+            'address' => 'nullable|string|max:255',
         ]);
 
         HelpRequest::create([
-            'user_id' => session('user_id'), // from login session
+            'user_id' => session('user_id'),
             'category' => $request->category,
             'description' => $request->description,
-            'status' => 'pending', // default status
+            'status' => 'pending',
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'address' => $request->address,
         ]);
 
         return back()->with('success', 'Help request submitted successfully!');
