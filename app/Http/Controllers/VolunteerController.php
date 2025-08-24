@@ -31,11 +31,7 @@ class VolunteerController extends Controller
         return back()->with('success', 'Request accepted successfully!');
     }
 
-<<<<<<< HEAD
-    // Decline a pending help request
-=======
     // Decline a pending request
->>>>>>> 70539b460857addd04a3ca460ca006269e73b8a6
     public function declineRequest($id)
     {
         $request = HelpRequest::findOrFail($id);
@@ -49,40 +45,4 @@ class VolunteerController extends Controller
 
         return back()->with('success', 'Request declined successfully!');
     }
-<<<<<<< HEAD
-
-    // -------------------
-    // Donations Section
-    // -------------------
-
-    // Show all pending donations
-    public function showDonations()
-    {
-        // Show both pending donations and accepted donations (for updates)
-        $donations = Donation::with('donor')
-            ->whereIn('status', ['pending', 'accepted'])
-            ->get();
-        return view('volunteer.donations', compact('donations'));
-    }
-
-    // Accept a pending donation
-    public function acceptDonation($id)
-    {
-        $donation = Donation::findOrFail($id);
-
-        if ($donation->status !== 'pending') {
-            return back()->with('error', 'Donation is already accepted or completed.');
-        }
-
-        $donation->status = 'accepted';
-
-        // Optional: assign volunteer ID
-        $donation->volunteer_id = session('user_id');
-
-        $donation->save();
-
-        return back()->with('success', 'Donation accepted successfully!');
-    }
-=======
->>>>>>> 70539b460857addd04a3ca460ca006269e73b8a6
 }
