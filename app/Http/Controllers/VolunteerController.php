@@ -16,6 +16,13 @@ class VolunteerController extends Controller
         return view('volunteer.requests', compact('requests'));
     }
 
+    // Show all available donations
+    public function showDonations()
+    {
+        $donations = Donation::whereIn('status', ['pending', 'accepted'])->get();
+        return view('volunteer.donations', compact('donations'));
+    }
+
     // Accept a pending help request
     public function acceptRequest($id)
     {
@@ -44,5 +51,20 @@ class VolunteerController extends Controller
         $request->save();
 
         return back()->with('success', 'Request declined successfully!');
+    }
+
+    // Accept a donation
+    public function acceptDonation($id)
+    {
+        $donation = Donation::findOrFail($id);
+
+        if ($donation->status !== 'pending') {
+            return back()->with('error', 'Donation is already processed.');
+        }
+
+        $donation->status = 'accepted';
+        $donation->save();
+
+        return back()->with('success', 'Donation accepted successfully!');
     }
 }

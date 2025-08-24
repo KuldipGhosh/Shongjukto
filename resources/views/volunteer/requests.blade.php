@@ -21,7 +21,6 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div class="dashboard-title d-flex align-items-center">
                 <span style="font-size:2.2rem; font-weight:800; letter-spacing:1px; color:#1b4332;">Volunteer Dashboard</span>
-<<<<<<< HEAD
             </div>
             <div class="d-flex gap-2">
                 <a href="{{ route('home') }}" class="btn btn-outline-primary logout-btn">Home</a>
@@ -30,8 +29,6 @@
                     View Donations
                 </a>
                 <a href="{{ route('logout') }}" class="btn btn-danger logout-btn">Logout</a>
-=======
->>>>>>> 70539b460857addd04a3ca460ca006269e73b8a6
             </div>
         </div>
 
@@ -67,26 +64,17 @@
                 <tbody>
                     @foreach ($requests as $request)
                     <tr>
-<<<<<<< HEAD
-                        <td><span class="fw-semibold" style="color:#2d6a4f;">{{ $request->category }}</span></td>
-=======
                         <td>
                             <span class="fw-semibold" style="color:#2d6a4f;">{{ $request->category }}</span>
                         </td>
->>>>>>> 70539b460857addd04a3ca460ca006269e73b8a6
                         <td>{{ $request->description ?? 'N/A' }}</td>
                         <td>
                             @if($request->status === 'pending')
                                 <span class="badge bg-warning text-dark" style="font-size:1rem; padding:0.5em 1.1em; border-radius:0.7em;">Pending</span>
-<<<<<<< HEAD
                             @elseif($request->status === 'accepted')
                                 <span class="accepted-badge" style="font-size:1rem;">Accepted</span>
                             @else
                                 <span class="badge bg-danger" style="font-size:1rem; padding:0.5em 1.1em; border-radius:0.7em;">Declined</span>
-=======
-                            @else
-                                <span class="accepted-badge" style="font-size:1rem;">Accepted</span>
->>>>>>> 70539b460857addd04a3ca460ca006269e73b8a6
                             @endif
                         </td>
                         <td>
@@ -101,11 +89,6 @@
                                         <button type="submit" class="btn btn-danger btn-sm" style="border-radius:0.7em;">Decline</button>
                                     </form>
                                 </div>
-<<<<<<< HEAD
-=======
-                            @elseif($request->status === 'declined')
-                                <span class="badge bg-danger" style="font-size:1rem; padding:0.5em 1.1em; border-radius:0.7em;">Declined</span>
->>>>>>> 70539b460857addd04a3ca460ca006269e73b8a6
                             @else
                                 <span class="text-muted">Processed</span>
                             @endif
@@ -121,7 +104,4 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-<<<<<<< HEAD
 </html>
-=======
->>>>>>> 70539b460857addd04a3ca460ca006269e73b8a6
