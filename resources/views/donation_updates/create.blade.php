@@ -5,7 +5,7 @@
     <title>Submit Donation Update</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body { background: linear-gradient(120deg, #e0eafc, #cfdef3 100%); }
+        body { background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); }
         .update-form { max-width: 600px; margin: 90px auto; background: #fff; border-radius: 1rem; box-shadow: 0 10px 30px rgba(0,0,0,0.12); padding: 2rem; position: relative; }
         .btn-pill { border-radius: 12px; padding: 10px 18px; font-weight: 600; }
         .title { font-weight: 800; color: #1b4332; }

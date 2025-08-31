@@ -63,7 +63,11 @@ public function login(Request $request)
     // Store user ID and role in session
     session(['user_id' => $user->id, 'user_role' => $user->role]);
 
-    // Redirect all users to homepage after login
+    // Redirect admin to admin dashboard, others to homepage
+    if ($user->role === 'admin') {
+        return redirect('/admin/dashboard')->with('success', 'Logged in successfully');
+    }
+    
     return redirect('/')->with('success', 'Logged in successfully');
 }
 }

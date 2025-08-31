@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login - Shongjukto</title>
+    <title>{{ __('messages.login') }} - Shongjukto</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body { 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); 
             min-height: 100vh;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
@@ -84,34 +84,100 @@
             border-radius: 12px;
             border: none;
         }
+        
+        /* Alert positioning and styling */
+        .alert {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1050;
+            min-width: 300px;
+            max-width: 500px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border: none;
+            border-radius: 8px;
+            animation: slideInRight 0.3s ease-out;
+        }
+        
+        .alert-success {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+        
+        .alert-danger {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            color: #721c24;
+            border-left: 4px solid #dc3545;
+        }
+        
+        .alert ul {
+            margin-bottom: 0;
+            padding-left: 20px;
+        }
+        
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        /* Responsive alert positioning */
+        @media (max-width: 768px) {
+            .alert {
+                top: 10px;
+                right: 10px;
+                left: 10px;
+                min-width: auto;
+                max-width: none;
+            }
+        }
     </style>
 </head>
 <body>
 
 <div class="topbar">
     <a href="{{ route('home') }}" class="btn btn-outline-primary btn-custom">
-        <i class="fas fa-home"></i> Home
+        <i class="fas fa-home"></i> {{ __('messages.home') }}
     </a>
     @if(session('user_id'))
         <a href="{{ route('profile.show') }}" class="btn btn-outline-secondary btn-custom">
-            <i class="fas fa-user"></i> Profile
+            <i class="fas fa-user"></i> {{ __('messages.profile') }}
         </a>
         <a href="{{ route('logout') }}" class="btn btn-danger btn-custom">
-            <i class="fas fa-sign-out-alt"></i> Logout
+            <i class="fas fa-sign-out-alt"></i> {{ __('messages.logout') }}
         </a>
     @endif
+    
+    @include('components.language-switcher')
 </div>
+
+@php
+    $successMessage = session('success');
+@endphp
+@if($successMessage)
+    <div class="alert alert-success alert-dismissible fade show" role="alert" id="success-alert" data-message="{{ $successMessage }}">
+        <i class="fas fa-check-circle me-2"></i>
+        {{ $successMessage }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
 
 <div class="login-form">
     <div class="brand-logo">
         <img src="https://img.icons8.com/color/96/000000/handshake.png" alt="Shongjukto">
-        <h2 class="title">Welcome Back</h2>
-        <p class="text-muted">Sign in to your Shongjukto account</p>
+        <h2 class="title">{{ __('messages.welcome_back') }}</h2>
+        <p class="text-muted">{{ __('messages.sign_in_account') }}</p>
     </div>
 
     @if ($errors->any())
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <i class="fas fa-exclamation-triangle"></i> Please fix the following errors:
+            <i class="fas fa-exclamation-triangle"></i> {{ __('messages.fix_errors') }}
             <ul class="mb-0 mt-2">
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
@@ -126,14 +192,14 @@
 
         <div class="mb-4">
             <label class="form-label">
-                <i class="fas fa-envelope text-primary"></i> Email Address
+                <i class="fas fa-envelope text-primary"></i> {{ __('messages.email_address') }}
             </label>
             <div class="input-group">
                 <span class="input-group-text">
                     <i class="fas fa-envelope"></i>
                 </span>
                 <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" 
-                       value="{{ old('email') }}" placeholder="Enter your email">
+                                               value="{{ old('email') }}" placeholder="{{ __('messages.enter_email') }}">
             </div>
             @error('email')
                 <div class="invalid-feedback">{{ $message }}</div>
@@ -142,14 +208,14 @@
 
         <div class="mb-4">
             <label class="form-label">
-                <i class="fas fa-lock text-primary"></i> Password
+                <i class="fas fa-lock text-primary"></i> {{ __('messages.password') }}
             </label>
             <div class="input-group">
                 <span class="input-group-text">
                     <i class="fas fa-lock"></i>
                 </span>
                 <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" 
-                       placeholder="Enter your password">
+                                               placeholder="{{ __('messages.enter_password') }}">
             </div>
             @error('password')
                 <div class="invalid-feedback">{{ $message }}</div>
@@ -158,21 +224,70 @@
 
         <div class="d-grid mb-4">
             <button type="submit" class="btn btn-primary btn-custom" style="padding: 14px; font-size: 1.1rem;">
-                <i class="fas fa-sign-in-alt"></i> Sign In
+                <i class="fas fa-sign-in-alt"></i> {{ __('messages.sign_in') }}
             </button>
         </div>
     </form>
 
     <div class="text-center">
         <p class="text-muted mb-0">
-            Don't have an account? 
+            {{ __('messages.dont_have_account') }} 
             <a href="{{ route('signup') }}" class="text-decoration-none fw-bold">
-                <i class="fas fa-user-plus"></i> Sign up now
+                <i class="fas fa-user-plus"></i> {{ __('messages.sign_up_now') }}
             </a>
         </p>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+// Prevent duplicate alerts and auto-dismiss functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Remove any duplicate success alerts (keep only the first one)
+    const successAlerts = document.querySelectorAll('.alert-success');
+    if (successAlerts.length > 1) {
+        // Keep only the first success alert, remove the rest
+        for (let i = 1; i < successAlerts.length; i++) {
+            successAlerts[i].remove();
+        }
+    }
+    
+    // Remove any duplicate error alerts (keep only the first one)
+    const errorAlerts = document.querySelectorAll('.alert-danger');
+    if (errorAlerts.length > 1) {
+        // Keep only the first error alert, remove the rest
+        for (let i = 1; i < errorAlerts.length; i++) {
+            errorAlerts[i].remove();
+        }
+    }
+    
+    // Auto-dismiss remaining alerts after 5 seconds
+    document.querySelectorAll('.alert').forEach(alert => {
+        setTimeout(() => {
+            if (alert && alert.parentNode) {
+                alert.classList.remove('show');
+                setTimeout(() => {
+                    if (alert && alert.parentNode) {
+                        alert.remove();
+                    }
+                }, 300);
+            }
+        }, 5000);
+    });
+    
+    // Add click to dismiss functionality
+    document.querySelectorAll('.alert').forEach(alert => {
+        alert.addEventListener('click', function() {
+            this.classList.remove('show');
+            setTimeout(() => {
+                if (this && this.parentNode) {
+                    this.remove();
+                }
+            }, 300);
+        });
+    });
+});
+</script>
 </body>
 </html>

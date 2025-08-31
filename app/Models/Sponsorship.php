@@ -11,7 +11,7 @@ class Sponsorship extends Model
 
     protected $fillable = [
         'donor_id',
-        'beneficiary_id',
+        'student_id',
         'type',
         'amount',
         'start_date',
@@ -24,9 +24,9 @@ class Sponsorship extends Model
         return $this->belongsTo(User::class, 'donor_id');
     }
 
-    public function beneficiary()
+    public function student()
     {
-        return $this->belongsTo(User::class, 'beneficiary_id');
+        return $this->belongsTo(Student::class, 'student_id');
     }
 }
 

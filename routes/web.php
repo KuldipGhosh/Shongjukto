@@ -10,7 +10,14 @@ use App\Http\Controllers\SponsorshipController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\DonationUpdateController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\LanguageController;
 use Illuminate\Http\Request;
+
+// Language switching route
+Route::get('/language/{locale}', [LanguageController::class, 'switch'])->name('language.switch');
+Route::get('/language-test', [LanguageController::class, 'test'])->name('language.test');
+Route::get('/test-language', function() { return view('test-language'); })->name('test.language');
 
 Route::get('/', fn() => view('home'))->name('home');
 
@@ -51,6 +58,12 @@ Route::middleware('authcheck')->group(function () {
     Route::post('/appointments', [AppointmentController::class, 'store'])->name('appointments.store');
     Route::get('/appointments/my', [AppointmentController::class, 'my'])->name('appointments.my');
 
+    // Volunteer Appointments
+    Route::get('/volunteer/appointments', [AppointmentController::class, 'volunteerAppointments'])->name('volunteer.appointments');
+    Route::post('/volunteer/appointments/{id}/accept', [AppointmentController::class, 'acceptAppointment'])->name('volunteer.appointments.accept');
+    Route::post('/volunteer/appointments/{id}/decline', [AppointmentController::class, 'declineAppointment'])->name('volunteer.appointments.decline');
+    Route::post('/volunteer/appointments/{id}/outcome', [AppointmentController::class, 'updateOutcome'])->name('volunteer.appointments.outcome');
+
     Route::get('/volunteer/donations', [VolunteerController::class, 'showDonations'])->name('volunteer.donations');
     Route::post('/volunteer/donations/{id}/accept', [VolunteerController::class, 'acceptDonation'])->name('volunteer.donations.accept');
 
@@ -70,6 +83,34 @@ Route::middleware('authcheck')->group(function () {
     Route::middleware('volunteer')->group(function () {
         Route::get('/map', function () { return view('map'); })->name('map.view');
         Route::get('/map/data', [DonationController::class, 'mapData'])->name('map.data');
+    });
+
+    // Admin routes
+    Route::middleware('admin')->group(function () {
+        Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+        
+        // User Management
+        Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
+        Route::delete('/admin/users/{id}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
+        
+        // Clinic Management
+        Route::get('/admin/clinics', [AdminController::class, 'clinics'])->name('admin.clinics');
+        Route::get('/admin/clinics/create', [AdminController::class, 'createClinic'])->name('admin.clinics.create');
+        Route::post('/admin/clinics', [AdminController::class, 'storeClinic'])->name('admin.clinics.store');
+        Route::get('/admin/clinics/{id}/edit', [AdminController::class, 'editClinic'])->name('admin.clinics.edit');
+        Route::put('/admin/clinics/{id}', [AdminController::class, 'updateClinic'])->name('admin.clinics.update');
+        Route::delete('/admin/clinics/{id}', [AdminController::class, 'deleteClinic'])->name('admin.clinics.delete');
+        
+        // Student Management
+        Route::get('/admin/students', [AdminController::class, 'students'])->name('admin.students');
+        Route::get('/admin/students/create', [AdminController::class, 'createStudent'])->name('admin.students.create');
+        Route::post('/admin/students', [AdminController::class, 'storeStudent'])->name('admin.students.store');
+        Route::get('/admin/students/{id}/edit', [AdminController::class, 'editStudent'])->name('admin.students.edit');
+        Route::put('/admin/students/{id}', [AdminController::class, 'updateStudent'])->name('admin.students.update');
+        Route::delete('/admin/students/{id}', [AdminController::class, 'deleteStudent'])->name('admin.students.delete');
+        
+        // Appointment Management
+        Route::get('/admin/appointments', [AdminController::class, 'appointments'])->name('admin.appointments');
     });
 });
 

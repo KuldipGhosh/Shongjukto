@@ -5,6 +5,7 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use App\Http\Middleware\Authcheck;
 use App\Http\Middleware\VolunteerMiddleware;
+use App\Http\Middleware\AdminMiddleware;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -17,6 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'authcheck' => Authcheck::class,
             'volunteer' => VolunteerMiddleware::class,
+            'admin' => AdminMiddleware::class,
         ]);
 
 

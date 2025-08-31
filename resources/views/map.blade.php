@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <style>
         body { 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); 
             min-height: 100vh; 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
@@ -37,24 +37,27 @@
         }
         .legend { 
             background: rgba(255,255,255,0.95); 
-            padding: 16px 20px; 
+            padding: 20px 24px; 
             border-radius: 16px; 
             box-shadow: 0 8px 32px rgba(0,0,0,0.1);
             backdrop-filter: blur(10px);
             margin: 16px;
+            min-width: 280px;
         }
         .legend-item {
             display: flex;
             align-items: center;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
+            padding: 4px 0;
         }
         .legend span { 
             display: inline-block; 
-            width: 16px; 
-            height: 16px; 
+            width: 18px; 
+            height: 18px; 
             border-radius: 50%; 
-            margin-right: 12px; 
+            margin-right: 16px; 
             border: 2px solid rgba(255,255,255,0.8);
+            flex-shrink: 0;
         }
         .filter-pill { 
             border-radius: 25px; 
@@ -108,13 +111,12 @@
         <h6 class="mb-3 fw-bold">📊 Map Legend</h6>
         <div class="legend-item">
             <span style="background: #dc3545;"></span>
-            <span class="fw-semibold">Help Requests (Red)</span>
+            <span class="fw-semibold">Help Requests</span>
         </div>
         <div class="legend-item">
             <span style="background: #0d6efd;"></span>
-            <span class="fw-semibold">Donations (Blue)</span>
+            <span class="fw-semibold">Donations</span>
         </div>
-        <small class="text-muted">Click on markers to see details • Map updates every 15 seconds</small>
     </div>
 
     <div id="map"></div>

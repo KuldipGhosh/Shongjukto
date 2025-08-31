@@ -19,6 +19,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Register the language middleware
+        $this->app['router']->pushMiddlewareToGroup('web', \App\Http\Middleware\LanguageMiddleware::class);
     }
 }
